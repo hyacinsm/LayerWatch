@@ -29,17 +29,18 @@ class usbcam:
         self.hours = hours
         self.minutes = minutes
         self.seconds = seconds
-        self.recent = None
+        self.recent = ''
         self.images = 0
         self.recent_time = 'Y m d I M S p'
 
-    def create_cmd(*cmd_args):
+    def create_cmd(self,*cmd_args):
         return ' '.join(list(cmd_args))
 
     def make_file_name(self):
         self.recent_time = datetime.now().strftime('%Y_%m_%d-%I_%M_%p')
-        self.recent = self.recent_time+FILE_EXT
-        return self.recent
+        name = self.recent_time+FILE_EXT
+        self.recent = name
+        return name
 
     def mv_picture(self):
         cmd = self.create_cmd('mv', self.recent, self.save_dir)
@@ -51,9 +52,9 @@ class usbcam:
     def take_picture(self):
         self.images = self.images + 1
         file_name = self.make_file_name()
-        cmd = self.create_cmd(CAPTURE, WIDTH_FLAG+str(self.width),
-                              HEIGHT_FLAG+str(self.height),  OUTPUT_FLAG+file_name)
-        status = subprocess.run(cmd, shell=True)
+        cmd = self.create_cmd(CAPTURE,  OUTPUT_FLAG+file_name)
+        print('\n'+cmd+'\n')
+        status = subprocess.run('uvccapture -m -o'+file_name, shell=True)
         if status.returncode != 0:
             raise Exception('[ERROR] uvccapture didn\'t run sucessfully...')
 

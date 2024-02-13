@@ -19,7 +19,8 @@ ONLINE_MSG = '---ONLINE---'
 
 WIDTH = 400                             # in pixels
 HEIGHT = 525                            # in pixels
-IMAGE_PATH = '../static/images/'
+IMAGE_PATH = '~/ece434-hyacinsm/LayerWatch/website/static/images/'
+STATIC_PATH = '../static/images/'
 
 
 # days, hours, minutes, seconds
@@ -41,7 +42,7 @@ scheduler = APScheduler()
 def base():
     str_time = datetime.now().strftime('%Y %m %d %I %M %S %p')
     data = data_wrapper(cadence=cam.seconds, status=ONLINE_MSG,
-                        time=str_time, img='../static/images/right_stock_img.jpg', btn_txt='Stop Print')
+                        time=str_time, img=STATIC_PATH+cam.recent, btn_txt='Stop Print')
     print('base')
     print(data.gen_dict())
     return render_template('index.html', **data.gen_dict())
@@ -55,7 +56,7 @@ def shutdown(action):
         global power_off
         power_off = True
         str_time = datetime.now().strftime('%Y %m %d %I %M %S %p')
-        data = data_wrapper(cadence= -1, status= OFFLINE_MSG, time=str_time, img= '../static/images/right_stock_img.jpg', btn_txt='Cancelled')
+        data = data_wrapper(cadence= -1, status= OFFLINE_MSG, time=str_time, img=STATIC_PATH+cam.recent , btn_txt='Cancelled')
         print(data.gen_dict())
         return render_template('index.html', **(data.gen_dict()))
     return render_template('index.html')
@@ -65,7 +66,7 @@ def shutdown(action):
 def updater():
     if power_off:
         scheduler.remove_all_jobs()
-    cam.recent_time = datetime.now().strftime('%Y %m %d %I %M %S %p')
+    cam.update_picture()
     cam.log()
 
 
