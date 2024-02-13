@@ -44,7 +44,8 @@ class usbcam:
 
     def mv_picture(self):
         cmd = self.create_cmd('mv', self.recent, self.save_dir)
-        status = subprocess.run(cmd, shell=True)
+        print(cmd)
+        status = subprocess.run('mv ' + self.recent +' '+ self.save_dir  , shell=True)
         if status.returncode != 0:
             raise Exception(
                 '[ERROR] could not move most recent photo to images folder...')

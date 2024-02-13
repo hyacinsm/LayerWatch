@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
 from datetime import datetime
@@ -15,7 +15,7 @@ OFFLINE_MSG = '---OFFLINE---'
 ONLINE_MSG = '---ONLINE---'
 
 #Pin Out
-## Set up GPIO for memmap
+# Set up GPIO for memmap
 GPIO1_offset = 0x4804c000
 GPIO2_offset = 0x481AC000
 GPIO1_size = 0x4804cfff-GPIO1_offset
@@ -42,7 +42,7 @@ D7 = P8_16
 
 WIDTH = 400                             # in pixels
 HEIGHT = 525                            # in pixels
-IMAGE_PATH = '~/ece434-hyacinsm/LayerWatch/website/static/images/'
+IMAGE_PATH = '/home/debian/ece434-hyacinsm/LayerWatch/website/static/images/'
 STATIC_PATH = '../static/images/'
 
 
