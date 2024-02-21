@@ -4,11 +4,14 @@ from mmap import mmap
 import time, struct
 import lcd
 
-def clear_bits(D7,D6,D5,D4):
-    return (~D7 | ~D6 | ~D5 | ~D4)
-
 def set_bits(D7,D6,D5,D4):
     return (D7 | D6 | D5 | D4)
+
+def toggle_enable(mem):
+    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
+    lcd.delay()
+    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
+    lcd.delay()
 
 def setup_pins(mem):
     packed_reg = mem[GPIO_OE:GPIO_OE+4]
@@ -30,30 +33,30 @@ def setup_pins(mem):
 
 def setup_lcd_4bit(mem):
     #4 bit mode
+    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
-    lcd.delay()
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
-    lcd.delay()
+    toggle_enable(mem)
     
-    #Clear display
-def clear_display(mem):
-    byteClear = clear_bits(D7,D6,D5,D4)
-    byteSet = set_bits(D7,D6,D5,D4)
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", byteClear)
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", byteSet)
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
-    lcd.delay()
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
-    byteClear = clear_bits(D7,D6,D5,D4)
-    byteSet = set_bits(D7,D6,~D5,D4)
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", byteClear)
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", byteSet)
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
-    lcd.delay()
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
-    lcd.delay()
+def command(mem, command):
+    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
+    #Top half of command first
+    set_data(mem, command >> 4)
+    toggle_enable(mem)
+    set_data(mem, command & 0x0F)
+    toggle_enable(mem)
+
+def set_data(mem, curByte):
+    # Clear all data then check what needs to be set
+    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+    for i, pin in enumerate([D4, D5, D6, D7]):
+        if curByte & (1 << i):
+            mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
+            
+# def write_data(mem, string):
+#     mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
     
+    
+        
 #LCD COMMANDS
 BITMODE_4 = (0x00)
 LCD2LINE = (0x08)
@@ -93,13 +96,13 @@ P8_25 = 1 << 0
 P9_23 = 1 << 17
 
 RS = P8_20
-E = P8_22
+E = P8_21
 D4 = P8_22
 D5 = P8_23
 D6 = P8_24
 D7 = P8_25
 
-dataBits= RS| D4 | D5 | D6 | D7
+dataBits= D4 | D5 | D6 | D7
 toggle = 0
 
 # Next we need to make the mmap, using the desired size and offset:
@@ -108,8 +111,12 @@ with open("/dev/mem", "r+b" ) as f:
 
 setup_pins(mem)
 lcd.delay()
-setup_lcd_4bit(mem)
-clear_display(mem)
+command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
+command(mem, LCD_FUNCTIONSET)
+command(mem, LCD_CLEARDISPLAY)
+command(mem, LCD_RETURNHOME)
+command(mem, LCD_DISPLAYON)
+command(mem, LCD_CURSORON)
 
 
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
