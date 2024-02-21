@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import lcd
+import lcd as lcd16
 # from mmap import mmap
 # import time, struct
 
@@ -27,7 +27,7 @@ D6 = P8_15
 D7 = P8_16
 
 try:
-    display = lcd.lcd(RS=RS, E=E, D4=D4, D5=D5, D6=D6, D7=D7, enable_offset= GPIO2_offset, chip_offset = GPIO1_offset, gpio_size = GPIO1_size, relay_pin= P9_23)
+    lcd = lcd16.lcd(RS=RS, E=E, D4=D4, D5=D5, D6=D6, D7=D7, enable_offset= GPIO2_offset, chip_offset = GPIO1_offset, gpio_size = GPIO1_size, relay_pin= P9_23)
 
     lcd.setup_pins()
     lcd.setup_pin_enable()
