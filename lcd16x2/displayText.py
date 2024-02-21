@@ -144,13 +144,13 @@ with open("/dev/mem", "r+b" ) as g:
 
 setup_pins(mem)
 setup_pin_enable(mem2)
-lcd.delay()
-# clear_display(mem)
-print("4 bit")
-setup_lcd_4bit(mem)
+# lcd.delay()
+# # clear_display(mem)
+# print("4 bit")
+# setup_lcd_4bit(mem)
 
-print("blink")
-command(mem, LCD_BLINKON)
+# print("blink")
+# command(mem, LCD_BLINKON)
 
 # command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
 # command(mem, LCD_CLEARDISPLAY)
@@ -158,10 +158,10 @@ command(mem, LCD_BLINKON)
 # command(mem, LCD_DISPLAYON)
 # command(mem, LCD_CURSORON)
 
-lcd.delay()
+# lcd.delay()
 
-print("write")
-write_data(mem, "H")
+# print("write")
+# write_data(mem, "H")
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
 
 mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_18)
