@@ -61,7 +61,11 @@ def write_data(mem, message):
          toggle_enable(mem)
          set_data(mem, asci & 0x0F)
          toggle_enable(mem)
-    
+
+def clear_display(mem):
+    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
+    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+    toggle_enable(mem)
     
         
 #LCD COMMANDS
@@ -118,16 +122,19 @@ with open("/dev/mem", "r+b" ) as f:
 
 setup_pins(mem)
 lcd.delay()
-command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
-command(mem, LCD_CLEARDISPLAY)
-command(mem, LCD_RETURNHOME)
-command(mem, LCD_DISPLAYON)
-command(mem, LCD_CURSORON)
+clear_display(mem)
+
+
+# command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
+# command(mem, LCD_CLEARDISPLAY)
+# command(mem, LCD_RETURNHOME)
+# command(mem, LCD_DISPLAYON)
+# command(mem, LCD_CURSORON)
 
 
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
 
-write_data(mem, "Works I think")
+write_data(mem, "Work")
 print("here")
 
 try:
