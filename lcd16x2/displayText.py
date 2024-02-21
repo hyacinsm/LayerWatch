@@ -71,18 +71,18 @@ def write_string(memi, message):
      memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
      print("RS")
      time.sleep(4)
-     set_data(memi, 0x4)
-     toggle_enable(mem2)
-     set_data(memi, 0x8)
-     toggle_enable(mem2)
+    #  set_data(memi, 0x4)
+    #  toggle_enable(mem2)
+    #  set_data(memi, 0x8)
+    #  toggle_enable(mem2)
      
-    #  for char in message:
-    #      asci = ord(char)
-    #      set_data(memi,asci >> 4)
-    #      toggle_enable(mem2)
+     for char in message:
+         asci = ord(char)
+         set_data(memi,asci >> 4)
+         toggle_enable(mem2)
          
-    #      set_data(memi, asci & 0x0F)
-    #      toggle_enable(mem2)
+         set_data(memi, asci & 0x0F)
+         toggle_enable(mem2)
     
 
 def clear_display(mem):
