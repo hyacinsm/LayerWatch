@@ -37,7 +37,7 @@ try:
     lcd.toggle_relay()
     
     while(True):
-        lcd.command(lcd.LCD_CURSORSHIFT | lcd.LCD_SHIFTLEFT)
+        lcd.command(lcd16.LCD_CURSORSHIFT | lcd16.LCD_SHIFTLEFT)
         lcd.delayx(0.5)
     
 except KeyboardInterrupt:
