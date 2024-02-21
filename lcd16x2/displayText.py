@@ -100,6 +100,9 @@ LCD_DISPLAYCONTROL = (0x08)
 LCD_CURSORSHIFT = (0x10)
 LCD_FUNCTIONSET = (0x20)
 
+# Shift flags
+LCD_SHIFTRIGHT = (0x08)
+LCD_SHIFTLEFT = (0x0C)
 
 # Entry flags
 LCD_ENTRYLEFT = (0x02)
@@ -170,7 +173,7 @@ command(mem, LCD_DISPLAYCONTROL | LCD_CURSORON | LCD_DISPLAYON)
 print("write")
 write_string(mem, "192.168.7.2:8081")
 
-command(mem, LCD_CURSORON)
+command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
 
 print("end")
 try:
