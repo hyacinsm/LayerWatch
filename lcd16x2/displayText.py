@@ -134,7 +134,7 @@ with open("/dev/mem", "r+b" ) as f:
   mem = mmap(f.fileno(), GPIO1_size, offset=GPIO1_offset)
   
 with open("/dev/mem", "r+b" ) as g:
-  mem2 = mmap(f.fileno(), GPIO1_size, offset=GPIO2_offset)
+  mem2 = mmap(g.fileno(), GPIO1_size, offset=GPIO2_offset)
 
 setup_pins(mem)
 setup_pin_enable(mem2)
