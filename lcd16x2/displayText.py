@@ -122,22 +122,20 @@ with open("/dev/mem", "r+b" ) as f:
 
 setup_pins(mem)
 lcd.delay()
-clear_display(mem)
+# clear_display(mem)
 
 
-# command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
-# command(mem, LCD_CLEARDISPLAY)
-# command(mem, LCD_RETURNHOME)
-# command(mem, LCD_DISPLAYON)
-# command(mem, LCD_CURSORON)
+command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
+command(mem, LCD_CLEARDISPLAY)
+command(mem, LCD_RETURNHOME)
+command(mem, LCD_DISPLAYON)
+command(mem, LCD_CURSORON)
 
 
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", D4)
-mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", D5)
 
-
-# write_data(mem, "H")
+write_data(mem, "H")
 print("here")
 
 try:
