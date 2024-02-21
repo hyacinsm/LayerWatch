@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 import lcd
-from mmap import mmap
-import time, struct
+# from mmap import mmap
+# import time, struct
 
 ## Set up GPIO for memmap
 GPIO1_offset = 0x4804c000
