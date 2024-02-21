@@ -99,8 +99,7 @@ LCD_ENTRYMODESET = (0x04)
 LCD_DISPLAYCONTROL = (0x08)
 LCD_CURSORSHIFT = (0x10)
 LCD_FUNCTIONSET = (0x20)
-LCD_SETCGRAMADDR = (0x40)
-LCD_SETDDRAMADDR = (0x80)
+
 
 # Entry flags
 LCD_ENTRYLEFT = (0x02)
@@ -165,7 +164,8 @@ command(mem, 0x02)
 
 print("Display On")
 command(mem, 0x0C)
-# command(mem, LCD_CURSORON)
+
+command(mem, LCD_CURSORON)
 
 # lcd.delay()
 
@@ -173,12 +173,6 @@ print("write")
 write_string(mem, "192.168.7.2:8081")
 
 command(mem, LCD_CURSORON)
-
-time.sleep(3)
-# mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
-
-# mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_18)
-# mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_26)
 
 print("end")
 try:
