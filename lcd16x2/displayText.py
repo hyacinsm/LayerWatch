@@ -151,7 +151,9 @@ with open("/dev/mem", "r+b" ) as g:
 
 setup_pins(mem)
 setup_pin_enable(mem2)
+     
 lcd.delay()
+
 clear_display(mem)
 print("4 bit")
 setup_lcd_4bit(mem)
@@ -173,9 +175,6 @@ command(mem, LCD_DISPLAYCONTROL | LCD_CURSORON | LCD_DISPLAYON)
 
 print("write")
 write_string(mem, "192.168.7.2:8081      192.168.7.2:8081")
-
-command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
-command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
 
 print("end")
 try:
