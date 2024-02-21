@@ -119,7 +119,6 @@ with open("/dev/mem", "r+b" ) as f:
 setup_pins(mem)
 lcd.delay()
 command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
-command(mem, LCD_FUNCTIONSET)
 command(mem, LCD_CLEARDISPLAY)
 command(mem, LCD_RETURNHOME)
 command(mem, LCD_DISPLAYON)
