@@ -35,7 +35,7 @@ def setup_pin_enable(mem):
     packed_reg = mem[GPIO_OE:GPIO_OE+4]
     reg_status = struct.unpack("<L", packed_reg)[0]
 
-    reg_status &= ~(E)
+    reg_status &= ~(P)
     
     #Make all pins GPIO
     mem[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
@@ -66,6 +66,8 @@ def set_data(mem, curByte):
 
 def write_data(mem, message):
      mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
+     print("RS")
+     time.sleep(4)
 
      for char in message:
          asci = ord(char)
@@ -111,7 +113,7 @@ GPIO_OE = 0x134
 GPIO_SETDATAOUT = 0x194
 GPIO_CLEARDATAOUT = 0x190
 #Pins connected to LCD
-P8_26 = 1 << 28
+P8_26 = 1 << 29
 P8_18 = 1 << 1
 P8_11 = 1 << 13
 P8_12 = 1 << 12
@@ -158,6 +160,7 @@ lcd.delay()
 write_data(mem, "H")
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
 print("here")
+
 mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
 mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
 
