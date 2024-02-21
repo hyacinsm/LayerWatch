@@ -163,9 +163,7 @@ print("return home")
 command(mem, 0x02)
 
 print("Display On")
-command(mem, 0x0C)
-
-command(mem, LCD_CURSORON)
+command(mem, LCD_DISPLAYCONTROL | LCD_CURSORON | LCD_DISPLAYON)
 
 # lcd.delay()
 
