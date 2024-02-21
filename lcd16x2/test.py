@@ -1,4 +1,4 @@
-from lcd import lcd
+import lcd
 from mmap import mmap
 import time, struct
 
