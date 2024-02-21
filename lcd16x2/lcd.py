@@ -115,9 +115,9 @@ class lcd:
     def command(self, command):
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.RS)
         #Top half of command first
-        self.set_data(self.mem1, command >> 4)
+        self.set_data(command >> 4)
         self.toggle_enable()
-        self.set_data(self.mem1, command & 0x0F)
+        self.set_data(command & 0x0F)
         self.toggle_enable()
 
     def set_data(self, curByte):
