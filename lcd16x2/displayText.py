@@ -160,14 +160,14 @@ setup_lcd_4bit(mem)
 
 # lcd.delay()
 
-print("write")
-write_data(mem, "Hi")
+# print("write")
+# write_data(mem, "Hi")
 
 time.sleep(3)
-mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+# mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
 
-mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_18)
-mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_26)
+# mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_18)
+# mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_26)
 
 print("end")
 try:
