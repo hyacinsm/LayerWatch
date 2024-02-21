@@ -27,7 +27,7 @@ D6 = P8_15
 D7 = P8_16
 
 try:
-    lcd = lcd(RS=RS, E=E, D4=D4, D5=D5, D6=D6, D7=D7, enable_offset= GPIO2_offset, chip_offset = GPIO1_offset, gpio_size = GPIO1_size, relay_pin= P9_23)
+    display = lcd.lcd(RS=RS, E=E, D4=D4, D5=D5, D6=D6, D7=D7, enable_offset= GPIO2_offset, chip_offset = GPIO1_offset, gpio_size = GPIO1_size, relay_pin= P9_23)
 
     lcd.setup_pins()
     lcd.setup_pin_enable()
