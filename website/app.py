@@ -2,6 +2,7 @@
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
 from datetime import datetime
+import lcd as lcd16
 
 # must in be local directory
 from usbcam import usbcam
@@ -13,7 +14,29 @@ UPDATE_JOB_ID = 'updater'
 OFFLINE_MSG = '---OFFLINE---'
 ONLINE_MSG = '---ONLINE---'
 
+#Pin Out
+## Set up GPIO for memmap
+GPIO1_offset = 0x4804c000
+GPIO2_offset = 0x481AC000
+GPIO1_size = 0x4804cfff-GPIO1_offset
+GPIO_OE = 0x134
+GPIO_SETDATAOUT = 0x194
+GPIO_CLEARDATAOUT = 0x190
+#Pins connected to LCD
+P8_26 = 1 << 29
+P8_18 = 1 << 1 #GPIO_2
+P8_11 = 1 << 13
+P8_12 = 1 << 12
+P8_15 = 1 << 15
+P8_16 = 1 << 14
+P9_23 = 1 << 17
 
+RS = P8_26
+E = P8_18 #GPIO_2
+D4 = P8_11
+D5 = P8_12
+D6 = P8_15
+D7 = P8_16
 
 # user parameters <you can change theses for your needs>
 
@@ -31,6 +54,15 @@ SECONDS = 15
 
 cam = usbcam(width_px=WIDTH, height_px=HEIGHT,
              save_dir=IMAGE_PATH, days=DAYS, hours=HOURS, minutes=MINUTES, seconds=SECONDS)
+lcd = lcd16.lcd(RS=RS, E=E, D4=D4, D5=D5,D6=D6, D7=D7, 
+                enable_offset= GPIO2_offset, chip_offset = GPIO1_offset, gpio_size = GPIO1_size, relay_pin= P9_23)
+
+lcd.setup_pins()
+lcd.setup_pin_enable()
+lcd.setup_commands()
+
+lcd.write_string("http://172.22.166.50:5051")
+lcd.toggle_relay()
 
 power_off = False
 
@@ -55,6 +87,7 @@ def shutdown(action):
         print('should power off relay')
         global power_off
         power_off = True
+        lcd.toggle_relay()
         str_time = datetime.now().strftime('%Y %m %d %I %M %S %p')
         data = data_wrapper(cadence= -1, status= OFFLINE_MSG, time=str_time, img=STATIC_PATH+cam.recent , btn_txt='Cancelled')
         print(data.gen_dict())
@@ -66,6 +99,7 @@ def shutdown(action):
 def updater():
     if power_off:
         scheduler.remove_all_jobs()
+        lcd.mem_close()
     cam.update_picture()
     cam.log()
 
