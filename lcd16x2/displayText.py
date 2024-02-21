@@ -101,8 +101,8 @@ LCD_CURSORSHIFT = (0x10)
 LCD_FUNCTIONSET = (0x20)
 
 # Shift flags
-LCD_SHIFTRIGHT = (0x08)
-LCD_SHIFTLEFT = (0x0C)
+LCD_SHIFTLEFT = (0x08)
+LCD_SHIFTRIGHT = (0x0C)
 
 # Entry flags
 LCD_ENTRYLEFT = (0x02)
@@ -140,6 +140,7 @@ D7 = P8_16
 
 dataBits= D4 | D5 | D6 | D7
 toggle = 0
+count = 16
 
 # Next we need to make the mmap, using the desired size and offset:
 with open("/dev/mem", "r+b" ) as f:
@@ -179,12 +180,16 @@ command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
 print("end")
 try:
   while(True):
-    toggle = ~toggle
+    count = count + 1
+    if(count < 16):
+      toggle = ~toggle
+      count = 0
     if(toggle):
-      mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P9_23)
+      command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
+      
     else:
-      mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
-
+      command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
+      
     lcd.delay()
 
 except KeyboardInterrupt:
