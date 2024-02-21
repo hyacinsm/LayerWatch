@@ -170,7 +170,7 @@ command(mem, 0x0C)
 # lcd.delay()
 
 print("write")
-write_string(mem, "Hi")
+write_string(mem, "192.168.7.2:8081")
 
 time.sleep(3)
 # mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
