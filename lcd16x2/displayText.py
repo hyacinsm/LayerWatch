@@ -4,17 +4,14 @@ from mmap import mmap
 import time, struct
 import lcd
 
-def set_bits(D7,D6,D5,D4):
-    return (D7 | D6 | D5 | D4)
-
-def toggle_enable(mem):
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
+def toggle_enable(memi):
+    memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
     lcd.delay()
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
     lcd.delay()
 
-def setup_pins(mem):
-    packed_reg = mem[GPIO_OE:GPIO_OE+4]
+def setup_pins(memi):
+    packed_reg = memi[GPIO_OE:GPIO_OE+4]
     reg_status = struct.unpack("<L", packed_reg)[0]
 
     reg_status &= ~(RS)
@@ -26,58 +23,58 @@ def setup_pins(mem):
     reg_status &= ~(P9_23)
 
     #Make all pins GPIO
-    mem[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
+    memi[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
 
     #Everything set to 0
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS|D4|D5|D6|D7|P9_23)
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS|D4|D5|D6|D7|P9_23)
 
-def setup_pin_enable(mem):
+def setup_pin_enable(memi):
     packed_reg = mem[GPIO_OE:GPIO_OE+4]
     reg_status = struct.unpack("<L", packed_reg)[0]
 
     reg_status &= ~(E)
     
     #Make all pins GPIO
-    mem[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
+    memi[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
 
     #Everything set to 0
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
     
-def setup_lcd_4bit(mem):
+def setup_lcd_4bit(memi):
     #4 bit mode
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
-    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", D5)
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+    memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", D5)
     time.sleep(5)
     toggle_enable(mem2)
 
-def command(mem, command):
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
+def command(memi, command):
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     #Top half of command first
-    set_data(mem, command >> 4)
+    set_data(memi, command >> 4)
     toggle_enable(mem2)
-    set_data(mem, command & 0x0F)
+    set_data(memi, command & 0x0F)
     toggle_enable(mem2)
 
-def set_data(mem, curByte):
+def set_data(memi, curByte):
     # Clear all data then check what needs to be set
-    mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+    memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
     for i, pin in enumerate([D4, D5, D6, D7]):
         if curByte & (1 << i):
-            mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
+            memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
     print("x")        
     time.sleep(5)
 
-def write_data(mem, message):
-     mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
+def write_data(memi, message):
+     memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
      print("RS")
      time.sleep(4)
 
      for char in message:
          asci = ord(char)
-         set_data(mem,asci << 4)
+         set_data(memi,asci << 4)
          toggle_enable(mem2)
-         set_data(mem, asci & 0x0F)
+         set_data(memi, asci & 0x0F)
          toggle_enable(mem2)
 
 def clear_display(mem):
@@ -145,7 +142,7 @@ with open("/dev/mem", "r+b" ) as g:
 setup_pins(mem)
 setup_pin_enable(mem2)
 lcd.delay()
-# clear_display(mem)
+clear_display(mem)
 print("4 bit")
 setup_lcd_4bit(mem)
 
