@@ -180,6 +180,7 @@ try:
 
 except KeyboardInterrupt:
   mem.close()
+  mem2.close()
 
 
 
