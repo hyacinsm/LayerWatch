@@ -65,18 +65,24 @@ def set_data(memi, curByte):
             memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
     print("x")        
     time.sleep(5)
+    
 
 def write_string(memi, message):
      memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
      print("RS")
      time.sleep(4)
-     for char in message:
-         asci = ord(char)
-         set_data(memi,asci >> 4)
-         toggle_enable(mem2)
+     set_data(memi, 0x4)
+     toggle_enable()
+     set_data(memi, 0x8)
+     
+    #  for char in message:
+    #      asci = ord(char)
+    #      set_data(memi,asci >> 4)
+    #      toggle_enable(mem2)
          
-         set_data(memi, asci & 0x0F)
-         toggle_enable(mem2)
+    #      set_data(memi, asci & 0x0F)
+    #      toggle_enable(mem2)
+    
 
 def clear_display(mem):
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
@@ -152,13 +158,13 @@ setup_lcd_4bit(mem)
 
 # command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
 print("clear")
-command(mem, LCD_CLEARDISPLAY)
+command(mem, 0x01)
 
 print("return home")
-command(mem, LCD_RETURNHOME)
+command(mem, 0x02)
 
 print("Display On")
-command(mem, LCD_DISPLAYON)
+command(mem, 0x0C)
 # command(mem, LCD_CURSORON)
 
 # lcd.delay()
