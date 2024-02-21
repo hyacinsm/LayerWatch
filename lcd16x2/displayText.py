@@ -17,12 +17,12 @@ def setup_pins(mem):
     packed_reg = mem[GPIO_OE:GPIO_OE+4]
     reg_status = struct.unpack("<L", packed_reg)[0]
 
-    reg_status &= ~(P8_20)
-    reg_status &= ~(P8_21)
-    reg_status &= ~(P8_22)
-    reg_status &= ~(P8_23)
-    reg_status &= ~(P8_24)
-    reg_status &= ~(P8_25)
+    reg_status &= ~(RS)
+    reg_status &= ~(E)
+    reg_status &= ~(D4)
+    reg_status &= ~(D5)
+    reg_status &= ~(D6)
+    reg_status &= ~(D7)
     reg_status &= ~(P9_23)
     
     #Make all pins GPIO 
@@ -98,20 +98,20 @@ GPIO_OE = 0x134
 GPIO_SETDATAOUT = 0x194
 GPIO_CLEARDATAOUT = 0x190
 #Pins connected to LCD
-P8_20 = 1 << 31
-P8_21 = 1 << 30
-P8_22 = 1 << 5
-P8_23 = 1 << 4
-P8_24 = 1 << 1
-P8_25 = 1 << 0
+P9_12 = 1 << 28
+P9_15 = 1 << 16
+P8_11 = 1 << 13
+P8_12 = 1 << 12
+P8_15 = 1 << 15
+P8_16 = 1 << 14
 P9_23 = 1 << 17
 
-RS = P8_20
-E = P8_21
-D4 = P8_22
-D5 = P8_23
-D6 = P8_24
-D7 = P8_25
+RS = P9_12
+E = P9_15
+D4 = P8_11
+D5 = P8_12
+D6 = P8_15
+D7 = P8_16
 
 dataBits= D4 | D5 | D6 | D7
 toggle = 0
