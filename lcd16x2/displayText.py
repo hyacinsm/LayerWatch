@@ -142,6 +142,8 @@ lcd.delay()
 write_data(mem, "H")
 print("here")
 
+mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
+
 try:
   while(True):
     toggle = ~toggle
