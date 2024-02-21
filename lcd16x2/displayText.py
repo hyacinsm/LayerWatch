@@ -57,9 +57,9 @@ def write_data(mem, message):
      
      for char in message:
          asci = ord(char)
-         set_data(mem,char << 4)
+         set_data(mem,asci << 4)
          toggle_enable()
-         set_data(mem, char & 0x0F)
+         set_data(mem, asci & 0x0F)
          toggle_enable()
     
     
