@@ -164,8 +164,8 @@ print("write")
 write_data(mem, "H")
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
 
-mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
-mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
+mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_18)
+mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", P8_26)
 
 print("end")
 try:
