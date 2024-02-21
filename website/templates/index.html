@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content={{cadence}}>
     <title>LayerWatch</title>
     <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
@@ -25,7 +26,7 @@
                     <a href="/website/creators.html" class="navbar__links">Creators</a>
                 </li>
                 <li class="navbar__item">
-                    <a href="/" class="navbar__links">Repo</a>
+                    <a href="https://github.com/hyacinsm/LayerWatch" class="navbar__links">Repo</a>
                 </li>
                 <li class="navbar__btn">
                     <a href="/" class="button">Login</a>
@@ -49,15 +50,15 @@
       </div>
     </div>
 
-    <!-- Serives Section -->
+    <!-- Services Section -->
     <div class="services">
       <h1>See your Print Below...</h1>
       <div class="services__container">
         <div class="services__card">
-          <h2>-{{print_num}}-</h2>
-          <p>{{print_one_log}}</p>
-          <img src={{print_img}} alt="Current Print" style="width:400px;height:525px;">
-          <button><a href="/off">Stop Print</a></button>
+          <h2>{{status}}</h2>
+          <p>{{time}}</p>
+          <img src={{img}} alt="Current Print" style="width:400px;height:525px;">
+          <button><a href="/off">{{btn_txt}}</a></button>
         </div>
       </div>
     </div>
