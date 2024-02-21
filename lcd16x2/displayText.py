@@ -64,13 +64,12 @@ def set_data(memi, curByte):
         if curByte & (1 << i):
             memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
     print("x")        
-    time.sleep(5)
+    # time.sleep(5)
     
 
 def write_string(memi, message):
      memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
      print("RS")
-     time.sleep(4)
     #  set_data(memi, 0x4)
     #  toggle_enable(mem2)
     #  set_data(memi, 0x8)
@@ -81,7 +80,7 @@ def write_string(memi, message):
          set_data(memi,asci >> 4)
          toggle_enable(mem2)
          
-         set_data(memi, asci & 0x0F)
+         set_data(memi, asci & 0xF)
          toggle_enable(mem2)
     
 
