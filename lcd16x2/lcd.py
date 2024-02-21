@@ -3,5 +3,5 @@ import time, struct
 
 
 def delay():
-    time.sleep(0.2)
+    time.sleep(0.05)
     
