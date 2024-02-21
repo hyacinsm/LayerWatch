@@ -174,6 +174,7 @@ print("write")
 write_string(mem, "192.168.7.2:8081")
 
 command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
+command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
 
 print("end")
 try:
