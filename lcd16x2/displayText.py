@@ -5,6 +5,7 @@ import time, struct
 import lcd
 
 def toggle_enable(memi):
+    lcd.delay()
     memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
     lcd.delay()
     memi[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
@@ -65,15 +66,15 @@ def set_data(memi, curByte):
     print("x")        
     time.sleep(5)
 
-def write_data(memi, message):
+def write_string(memi, message):
      memi[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
      print("RS")
      time.sleep(4)
-
      for char in message:
          asci = ord(char)
-         set_data(memi,asci << 4)
+         set_data(memi,asci >> 4)
          toggle_enable(mem2)
+         
          set_data(memi, asci & 0x0F)
          toggle_enable(mem2)
 
@@ -115,7 +116,7 @@ GPIO_SETDATAOUT = 0x194
 GPIO_CLEARDATAOUT = 0x190
 #Pins connected to LCD
 P8_26 = 1 << 29
-P8_18 = 1 << 1
+P8_18 = 1 << 1 #GPIO_2
 P8_11 = 1 << 13
 P8_12 = 1 << 12
 P8_15 = 1 << 15
@@ -123,7 +124,7 @@ P8_16 = 1 << 14
 P9_23 = 1 << 17
 
 RS = P8_26
-E = P8_18
+E = P8_18 #GPIO_2
 D4 = P8_11
 D5 = P8_12
 D6 = P8_15
@@ -163,7 +164,7 @@ command(mem, LCD_DISPLAYON)
 # lcd.delay()
 
 print("write")
-write_data(mem, "Hi")
+write_string(mem, "Hi")
 
 time.sleep(3)
 # mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
