@@ -10,8 +10,6 @@ import subprocess
 from datetime import datetime
 
 
-# File transfer
-
 # UVCCAPTURE  Constants
 CAPTURE = 'uvccapture'
 HEIGHT_FLAG = '-x'
@@ -23,13 +21,17 @@ FILE_EXT = '.jpg'
 
 class usbcam:
 
-    def __init__(self, width_px=240, height_px=240, save_dir=''):
+    def __init__(self, width_px=240, height_px=240, save_dir='', days=0, hours=0, minutes=0, seconds=0):
         self.width = width_px
         self.height = height_px
         self.save_dir = save_dir
+        self.days = days
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
         self.recent = None
         self.images = 0
-        self.recent_time = ''
+        self.recent_time = 'Y m d I M S p'
 
     def create_cmd(*cmd_args):
         return ' '.join(list(cmd_args))
@@ -59,5 +61,5 @@ class usbcam:
         self.take_picture()
         self.mv_picture()
 
-    def debug(self, msg = 'Default Message'):
-        print(msg)
+    def log(self):
+        print(f'[PHOTO] {self.recent} generated')
