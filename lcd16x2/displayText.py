@@ -99,7 +99,7 @@ GPIO_SETDATAOUT = 0x194
 GPIO_CLEARDATAOUT = 0x190
 #Pins connected to LCD
 P9_12 = 1 << 28
-P9_15 = 1 << 16
+P9_14 = 1 << 18
 P8_11 = 1 << 13
 P8_12 = 1 << 12
 P8_15 = 1 << 15
@@ -107,7 +107,7 @@ P8_16 = 1 << 14
 P9_23 = 1 << 17
 
 RS = P9_12
-E = P9_15
+E = P9_14
 D4 = P8_11
 D5 = P8_12
 D6 = P8_15
