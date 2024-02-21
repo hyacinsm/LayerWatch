@@ -65,6 +65,7 @@ def set_data(mem, curByte):
     for i, pin in enumerate([D4, D5, D6, D7]):
         if curByte & (1 << i):
             mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
+    print("x")        
     time.sleep(5)
 
 def write_data(mem, message):
@@ -145,7 +146,10 @@ setup_pins(mem)
 setup_pin_enable(mem2)
 lcd.delay()
 # clear_display(mem)
+print("4 bit")
 setup_lcd_4bit(mem)
+
+print("blink")
 command(mem, LCD_BLINKON)
 
 # command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
@@ -156,15 +160,14 @@ command(mem, LCD_BLINKON)
 
 lcd.delay()
 
-
+print("write")
 write_data(mem, "H")
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
-print("here")
 
 mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
 mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
 
-
+print("end")
 try:
   while(True):
     toggle = ~toggle
