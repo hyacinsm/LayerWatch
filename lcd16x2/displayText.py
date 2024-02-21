@@ -2,7 +2,7 @@
 # From: https://graycat.io/tutorials/beaglebone-io-using-python-mmap/
 from mmap import mmap
 import time, struct
-import lcd16x2.lcd as lcd
+import lcd
 
 def clear_bits(D7,D6,D5,D4):
     return (~D7 | ~D6 | ~D5 | ~D4)
