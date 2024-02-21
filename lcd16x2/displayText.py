@@ -129,6 +129,7 @@ command(mem, LCD_CURSORON)
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
 
 write_data(mem, "Works I think")
+print("here")
 
 try:
   while(True):
