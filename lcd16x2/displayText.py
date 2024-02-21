@@ -52,8 +52,15 @@ def set_data(mem, curByte):
         if curByte & (1 << i):
             mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
             
-# def write_data(mem, string):
-#     mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
+def write_data(mem, message):
+     mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
+     
+     for char in message:
+         asci = ord(char)
+         set_data(mem,char << 4)
+         toggle_enable()
+         set_data(mem, char & 0x0F)
+         toggle_enable()
     
     
         
@@ -120,6 +127,8 @@ command(mem, LCD_CURSORON)
 
 
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
+
+write_data(mem, "Works I think")
 
 try:
   while(True):
