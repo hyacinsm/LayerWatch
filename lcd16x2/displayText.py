@@ -48,6 +48,7 @@ def setup_lcd_4bit(mem):
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
     mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", D5)
+    time.sleep(5)
     toggle_enable(mem2)
 
 def command(mem, command):
@@ -64,6 +65,7 @@ def set_data(mem, curByte):
     for i, pin in enumerate([D4, D5, D6, D7]):
         if curByte & (1 << i):
             mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
+    time.sleep(5)
 
 def write_data(mem, message):
      mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
