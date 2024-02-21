@@ -133,9 +133,9 @@ clear_display(mem)
 
 
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
-mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", D4)
 
-write_data(mem, "Work")
+# write_data(mem, "H")
 print("here")
 
 try:
