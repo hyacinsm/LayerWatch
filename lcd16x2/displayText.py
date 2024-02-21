@@ -47,6 +47,7 @@ def setup_lcd_4bit(mem):
     #4 bit mode
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
+    mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", D5)
     toggle_enable(mem2)
 
 def command(mem, command):
@@ -142,17 +143,14 @@ setup_pins(mem)
 setup_pin_enable(mem2)
 lcd.delay()
 # clear_display(mem)
+setup_lcd_4bit(mem)
+command(mem, LCD_BLINKON)
 
-
-command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
-command(mem, LCD_CLEARDISPLAY)
-command(mem, LCD_RETURNHOME)
-command(mem, LCD_DISPLAYON)
-command(mem, LCD_CURSORON)
-
-
-mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
-mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", D4)
+# command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
+# command(mem, LCD_CLEARDISPLAY)
+# command(mem, LCD_RETURNHOME)
+# command(mem, LCD_DISPLAYON)
+# command(mem, LCD_CURSORON)
 
 lcd.delay()
 
