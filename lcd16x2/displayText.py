@@ -172,7 +172,7 @@ command(mem, LCD_DISPLAYCONTROL | LCD_CURSORON | LCD_DISPLAYON)
 # lcd.delay()
 
 print("write")
-write_string(mem, "192.168.7.2:8081")
+write_string(mem, "192.168.7.2:8081      192.168.7.2:8081")
 
 command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
 command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
@@ -180,16 +180,7 @@ command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
 print("end")
 try:
   while(True):
-    count = count + 1
-    if(count < 16):
-      toggle = ~toggle
-      count = 0
-    if(toggle):
-      command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
-      
-    else:
-      command(mem, LCD_CURSORSHIFT | LCD_SHIFTRIGHT)
-      
+    command(mem, LCD_CURSORSHIFT | LCD_SHIFTLEFT)
     lcd.delay()
 
 except KeyboardInterrupt:
