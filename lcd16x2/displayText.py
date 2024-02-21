@@ -155,14 +155,18 @@ setup_lcd_4bit(mem)
 # command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
 print("clear")
 command(mem, LCD_CLEARDISPLAY)
-# command(mem, LCD_RETURNHOME)
-# command(mem, LCD_DISPLAYON)
+
+print("return home")
+command(mem, LCD_RETURNHOME)
+
+print("Display On")
+command(mem, LCD_DISPLAYON)
 # command(mem, LCD_CURSORON)
 
 # lcd.delay()
 
-# print("write")
-# write_data(mem, "Hi")
+print("write")
+write_data(mem, "Hi")
 
 time.sleep(3)
 # mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
