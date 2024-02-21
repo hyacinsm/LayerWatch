@@ -155,8 +155,8 @@ setup_lcd_4bit(mem)
 
 # print("blink")
 # command(mem, LCD_BLINKON)
+command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
 
-# command(mem, LCD_FUNCTIONSET | BITMODE_4 | LCD2LINE)
 print("clear")
 command(mem, 0x01)
 
@@ -171,6 +171,8 @@ command(mem, 0x0C)
 
 print("write")
 write_string(mem, "192.168.7.2:8081")
+
+command(mem, LCD_CURSORON)
 
 time.sleep(3)
 # mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
