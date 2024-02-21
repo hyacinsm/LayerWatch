@@ -62,11 +62,11 @@ class lcd:
         time.sleep(timer)
     
     def toggle_enable(self): #Enable Pin on different GPIO chip
-        lcd.delay()
-        self.mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
-        lcd.delay()
-        self.mem2[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", E)
-        lcd.delay()
+        self.delay()
+        self.mem2[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", self.E)
+        self.delay()
+        self.mem2[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.E)
+        self.delay()
 
     def setup_pins(self):
         packed_reg = self.mem1[GPIO_OE:GPIO_OE+4]
@@ -102,7 +102,7 @@ class lcd:
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.RS)
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.dataBits)
         self.mem1[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", self.D5)
-        lcd.toggle_enable()
+        self.toggle_enable()
     
     def setup_commands(self):
         self.clear_display()
@@ -115,15 +115,15 @@ class lcd:
     def command(self, command):
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.RS)
         #Top half of command first
-        lcd.set_data(self.mem1, command >> 4)
-        lcd.toggle_enable()
-        lcd.set_data(self.mem1, command & 0x0F)
-        lcd.toggle_enable()
+        self.set_data(self.mem1, command >> 4)
+        self.toggle_enable()
+        self.set_data(self.mem1, command & 0x0F)
+        self.toggle_enable()
 
     def set_data(self, curByte):
         # Clear all data then check what needs to be set
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.dataBits)
-        for i, pin in enumerate([D4, D5, D6, D7]):
+        for i, pin in enumerate([self.D4, self.D5, self.D6, self.D7]):
             if curByte & (1 << i):
                 self.mem1[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
         
@@ -134,16 +134,16 @@ class lcd:
         print("Writing")
         for char in message:
             asci = ord(char)
-            lcd.set_data(asci >> 4)
-            lcd.toggle_enable()
+            self.set_data(asci >> 4)
+            self.toggle_enable()
             
-            lcd.set_data(asci & 0xF)
-            lcd.toggle_enable()
+            self.set_data(asci & 0xF)
+            self.toggle_enable()
         
     def clear_display(self):
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.RS)
         self.mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", self.dataBits)
-        lcd.toggle_enable()
+        self.toggle_enable()
     
     def toggle_relay(self):
         self.toggle = ~self.toggle
