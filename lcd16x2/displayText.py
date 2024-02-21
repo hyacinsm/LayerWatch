@@ -24,10 +24,10 @@ def setup_pins(mem):
     reg_status &= ~(D6)
     reg_status &= ~(D7)
     reg_status &= ~(P9_23)
-    
-    #Make all pins GPIO 
+
+    #Make all pins GPIO
     mem[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
-    
+
     #Everything set to 0
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", reg_status)
 
@@ -36,7 +36,7 @@ def setup_lcd_4bit(mem):
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
     toggle_enable(mem)
-    
+
 def command(mem, command):
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     #Top half of command first
@@ -51,10 +51,10 @@ def set_data(mem, curByte):
     for i, pin in enumerate([D4, D5, D6, D7]):
         if curByte & (1 << i):
             mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", pin)
-            
+
 def write_data(mem, message):
      mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", RS)
-     
+
      for char in message:
          asci = ord(char)
          set_data(mem,asci << 4)
@@ -66,8 +66,8 @@ def clear_display(mem):
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", RS)
     mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", dataBits)
     toggle_enable(mem)
-    
-        
+
+
 #LCD COMMANDS
 BITMODE_4 = (0x00)
 LCD2LINE = (0x08)
@@ -89,7 +89,7 @@ LCD_DISPLAYON = (0x04)
 LCD_CURSORON = (0x02)
 LCD_CURSOROFF = (0x00)
 LCD_BLINKON = (0x01)
-LCD_BLINKOFF = (0x00) 
+LCD_BLINKOFF = (0x00)
 
 ## Set up GPIO for memmap
 GPIO1_offset = 0x4804c000
@@ -136,7 +136,7 @@ mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", P9_23)
 mem[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", D4)
 mem[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L", E)
 
-lcd.delay(0.5)
+lcd.delay()
 
 
 write_data(mem, "H")
@@ -154,7 +154,7 @@ try:
 
 except KeyboardInterrupt:
   mem.close()
-  
 
 
-    
+
+
