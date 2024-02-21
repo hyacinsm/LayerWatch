@@ -424,93 +424,106 @@
   -moz-text-fill-color: transparent;
 }
 
-
-.services__container{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+.services__container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.services__card{
-    margin: 1rem;
-    height: 525px;
-    width: 400px;
-    border-radius: 4px;
-    background-image:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%),
-     url("/website/images/left_stock_img.jpg");
-    background-size: cover;
-    position: relative;
-    color: #fff;
+.services__card {
+  margin: 1rem;
+  height: 525px;
+  width: 400px;
+  border-radius: 4px;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(17, 17, 17, 0.6) 100%
+  );
+  background-size: cover;
+  position: relative;
+  color: #fff;
 }
-
-
-.services__card:nth-child(2){
-    margin: 1rem;
-    height: 525px;
-    width: 400px; /*should be replaces with resolution of webcam*/
-    border-radius: 4px;
-    background-image:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%),
-     url("/website/images/right_stock_img.jpg");
-}
-
 
 .services h2 {
-    position: absolute;
-    top:350px;
-    left: 30px;   
+  position: absolute;
+  top: 350px;
+  left: 30px;
 }
 
 .services__card p {
-    position: absolute;
-    top:400px;
-    left: 30px;   
+  position: absolute;
+  font-size: 1rem;
+  top: 400px;
+  left: 30px;
 }
-
 
 .services__card button {
-    color: #fff;
-    padding: 10px 20px;
-    border:none;
-    border-radius: 4px;
-    background: #f77062;
-    position: absolute;
-    top: 440px;
-    left:30px;
-    font-size: 1rem;
-    cursor: pointer;   
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background: #f77062;
+  position: absolute;
+  top: 440px;
+  left: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.services__card button:after{
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #4837ff;
+  transition: all 0.35s;
+  border-radius: 4px;
+}
+
+.services__card button:hover:after {
+  width: 100%;
+}
+
+.services__card button a {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-decoration: none;
 }
 
 
-.services__card:hover{
-    transform: scale(1.075);
-    transition: 0.2s ease-in;
-    cursor: pointer;
+.services__card:hover {
+  transform: scale(1.075);
+  transition: 0.2s ease-in;
+  cursor: pointer;
 }
-
-
 
 @media screen and (max-width: 960px) {
-    .services{
-        height: 1600px;
-    }
+  .services {
+    height: 1600px;
+  }
 
-    .services h1 {
-        font-size: 2rem;
-        margin-top: 12rem;
-    }
+  .services h1 {
+    font-size: 2rem;
+    margin-top: 12rem;
+  }
 }
 
+@media screen and (max-width: 480px) {
+  .services {
+    height: 1400px;
+  }
 
-@media screen and (max-width: 480px){
-  .services{
-        height: 1400px;
-    }
+  .services h1 {
+    font-size: 1.2rem;
+  }
 
-    .services h1 {
-        font-size: 1.2rem;
-    }
+  .services__card {
+    width: 300px;
+  }
 
-    .services__card{
-        width: 300px;
-    }
+
 }

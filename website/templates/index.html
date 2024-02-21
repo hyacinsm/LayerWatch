@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LayerWatch</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -44,28 +44,24 @@
           <button class="main__btn"><a href="/">Get Started</a></button>
         </div>
         <div class="main__img--container">
-          <img src="/website/images/temp_pic.svg" alt="3d printer" id="main__img">
+          <img src="../static/images/temp_pic.svg" alt="3d printer" id="main__img">
         </div>
       </div>
     </div>
 
     <!-- Serives Section -->
     <div class="services">
-      <h1>Check your Print from Anywhere</h1>
+      <h1>See your Print Below...</h1>
       <div class="services__container">
         <div class="services__card">
-          <h2>View Printer 1</h2>
-          <p>Last Log: </p>
-          <button>Edit Settings</button>
-        </div>
-        <div class="services__card">
-          <h2>View Printer 2</h2>
-          <p>Last log: </p>
-          <button>Edit Settings</button>
+          <h2>-{{print_num}}-</h2>
+          <p>{{print_one_log}}</p>
+          <img src={{print_img}} alt="Current Print" style="width:400px;height:525px;">
+          <button><a href="/off">Stop Print</a></button>
         </div>
       </div>
     </div>
 
-    <script src="/website/app.js"> </script>
+    <script src="../static/app.js"> </script>
 </body>
 </html>
