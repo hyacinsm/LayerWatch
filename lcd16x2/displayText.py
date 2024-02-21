@@ -35,7 +35,7 @@ def setup_pin_enable(mem):
     packed_reg = mem[GPIO_OE:GPIO_OE+4]
     reg_status = struct.unpack("<L", packed_reg)[0]
 
-    reg_status &= ~(P)
+    reg_status &= ~(E)
     
     #Make all pins GPIO
     mem[GPIO_OE:GPIO_OE+4] = struct.pack("<L", reg_status)
