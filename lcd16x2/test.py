@@ -38,7 +38,7 @@ try:
     
     while(True):
         lcd.command(lcd.LCD_CURSORSHIFT | lcd.LCD_SHIFTLEFT)
-        lcd.delay(0.5)
+        lcd.delayx(0.5)
     
 except KeyboardInterrupt:
   lcd.mem_close()

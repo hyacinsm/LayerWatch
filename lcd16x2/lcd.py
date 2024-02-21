@@ -58,7 +58,7 @@ class lcd:
     def delay(self):
         time.sleep(0.02)
     
-    def delay(self, timer):
+    def delayx(self, timer):
         time.sleep(timer)
     
     def toggle_enable(self): #Enable Pin on different GPIO chip
