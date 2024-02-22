@@ -59,10 +59,10 @@ lcd = lcd16.lcd(RS=RS, E=E, D4=D4, D5=D5,D6=D6, D7=D7,
 
 lcd.setup_pins()
 lcd.setup_pin_enable()
+lcd.toggle_relay()
 lcd.setup_commands()
 
 lcd.write_string("http://192.168.7.2:8081")
-lcd.toggle_relay()
 
 power_off = False
 
