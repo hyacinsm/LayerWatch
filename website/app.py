@@ -42,7 +42,7 @@ D7 = P8_16
 
 WIDTH = 400                             # in pixels
 HEIGHT = 525                            # in pixels
-IMAGE_PATH = '/home/debian/ece434-hyacinsm/LayerWatch/website/static/images/'
+IMAGE_PATH = '/home/debian/LayerWatch/website/static/images/'
 STATIC_PATH = '../static/images/'
 
 
