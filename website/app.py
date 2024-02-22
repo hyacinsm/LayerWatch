@@ -61,7 +61,7 @@ lcd.setup_pins()
 lcd.setup_pin_enable()
 lcd.setup_commands()
 
-lcd.write_string("http://172.22.166.50:5051")
+lcd.write_string("http://192.168.7.2:8081")
 lcd.toggle_relay()
 
 power_off = False
