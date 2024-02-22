@@ -5,6 +5,9 @@ Sean Hyacinthe
 # LayerWatch
 An open source, afforable way to monitor and stop 3D print failures before they happen.
 
+## Flask Server
+On the server you will find status photos from the USB Camera. In the bottom left of the photo you will find relevant data pertaining to the time of day the image was taken. As well as an stop print button. This button will power off your device and effectively stop the print.
+
 # Installation Instructions
 git clone git@github.com:hyacinsm/LayerWatch.git
 
@@ -12,7 +15,8 @@ git clone git@github.com:hyacinsm/LayerWatch.git
     2. sudo ./setup.sh
     3. sudo ./install.sh
     4. sudo ./LayerWatch.sh
-    5. sudo reboot
+    5. sudo reboot or sudo website/app.py
+    (The application runs on startup but you can run app.py found in website directory)
 
 # Pins for hardware on BeagleBone Black (BBB)
 
